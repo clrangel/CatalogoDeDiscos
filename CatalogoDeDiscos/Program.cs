@@ -3,7 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using CatalogoDeDiscos.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CatalogoDeDiscosContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CatalogoDeDiscosContext") ?? throw new InvalidOperationException("Connection string 'CatalogoDeDiscosContext' not found.")));
+options.UseMySql(builder.Configuration.GetConnectionString("CatalogoDeDiscosContext"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("CatalogoDeDiscosContext")),
+    builder => builder.MigrationsAssembly("CatalogoDeDiscos")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
