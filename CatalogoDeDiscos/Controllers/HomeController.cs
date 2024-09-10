@@ -1,4 +1,4 @@
-using CatalogoDeDiscos.Models;
+using CatalogoDeDiscos.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
