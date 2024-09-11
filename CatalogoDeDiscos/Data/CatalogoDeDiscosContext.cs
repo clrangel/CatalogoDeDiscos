@@ -14,6 +14,8 @@ namespace CatalogoDeDiscos.Data
         {
         }
 
-        public DbSet<CatalogoDeDiscos.Models.MusicGenre> MusicGenre { get; set; } = default!;
+        public DbSet<MusicGenre> MusicGenre { get; set; } = default!;
+        public DbSet<ArtistBand> ArtistBand { get; set; } = default!;
+        public DbSet<Album> Album { get; set; } = default!;
     }
 }
