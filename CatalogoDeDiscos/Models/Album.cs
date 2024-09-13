@@ -22,5 +22,7 @@ namespace CatalogoDeDiscos.Models
             Status = status;
             ArtistBand = artistBand;
         }
+
+        //Criar um método que mostre uma lista de disco por ano de lançamento
     }
 }

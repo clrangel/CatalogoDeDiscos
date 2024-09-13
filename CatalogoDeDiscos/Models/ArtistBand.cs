@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 namespace CatalogoDeDiscos.Models
 {
     public class ArtistBand
@@ -32,15 +33,33 @@ namespace CatalogoDeDiscos.Models
         {
             Albuns.Remove(al);
         }
-        
-        //Criar um método para mostrar todos os discos por artista
+
+        //Criar um método para mostrar todos os discos por artista - Nome do artista + nome disco
         /*
-        public string TotalAlbuns(int disc)
+        public string TotalAlbuns(string disc)
         {
-            return Albuns.Where(d => d.AlbumName);
+            return Albuns.Where(d => d.AlbumName == ArtistBand);
 
         }
         */
+
+        /*
+        public string AlbunsBand(string disc)
+        {
+            foreach(Album al in Albuns)
+            {
+                return al.AlbumName;
+            }
+        }
+        */
+
+        //Método para mostrar os discos por ano de lançamento
+        
+        public double TotalAlbuns(DateTime initial, DateTime final)
+        {
+            return Albuns.Where(al => al.ReleaseYear >= initial && al.ReleaseYear <= final).Sum(al => al.Id);
+        }
+      
     }
 
 }

@@ -1,9 +1,9 @@
 ﻿namespace CatalogoDeDiscos.Models.Enums
 {
-    public enum AlbumStatus
+    public enum AlbumStatus : int
     {
-        Studio,
-        Live,
-        Compilation
+        Studio = 0,
+        Live = 1,
+        Compilation = 2
     }
 }
