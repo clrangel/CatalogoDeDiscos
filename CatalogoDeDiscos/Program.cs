@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CatalogoDeDiscos.Data;
+using CatalogoDeDiscos.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CatalogoDeDiscosContext>(options =>
 options.UseMySql(builder.Configuration.GetConnectionString("CatalogoDeDiscosContext"),
@@ -12,6 +13,9 @@ options.UseMySql(builder.Configuration.GetConnectionString("CatalogoDeDiscosCont
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<ArtistBandService>();
+builder.Services.AddScoped<AlbumService>();
+
 
 var app = builder.Build();
 
