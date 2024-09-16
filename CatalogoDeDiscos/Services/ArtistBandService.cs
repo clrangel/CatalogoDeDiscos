@@ -17,5 +17,11 @@ namespace CatalogoDeDiscos.Services
         {
             return _context.ArtistBand.ToList();
         }
+
+        public void Insert(ArtistBand obj)
+        {
+            _context.Add(obj);
+            _context.SaveChanges();
+        }
     }
 }

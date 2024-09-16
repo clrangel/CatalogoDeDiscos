@@ -1,4 +1,5 @@
-﻿using CatalogoDeDiscos.Services;
+﻿using CatalogoDeDiscos.Models;
+using CatalogoDeDiscos.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogoDeDiscos.Controllers
@@ -6,19 +7,34 @@ namespace CatalogoDeDiscos.Controllers
     public class ArtistBandsController : Controller
     {
 
-        private readonly ArtistBandService _bandService;
+        private readonly ArtistBandService _artistBandService;
 
-        public ArtistBandsController(ArtistBandService bandService)
+        public ArtistBandsController(ArtistBandService ArtistBandService)
         {
-            _bandService = bandService;
+            _artistBandService = ArtistBandService;
         }
 
         public IActionResult Index()
         {
-            var list = _bandService.FindAll();
+            var list = _artistBandService.FindAll();
             
             return View(list);
 
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ArtistBand artistBand) 
+        {
+            _artistBandService.Insert(artistBand);
+
+            return RedirectToAction(nameof(Index));
+        }
+       
     }
 }
