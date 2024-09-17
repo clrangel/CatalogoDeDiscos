@@ -1,4 +1,5 @@
 ﻿using CatalogoDeDiscos.Models;
+using CatalogoDeDiscos.Models.ViewModels;
 using CatalogoDeDiscos.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,12 @@ namespace CatalogoDeDiscos.Controllers
     {
 
         private readonly ArtistBandService _artistBandService;
+        private readonly MusicGenreService _musicGenreService;
 
-        public ArtistBandsController(ArtistBandService ArtistBandService)
+        public ArtistBandsController(ArtistBandService ArtistBandService, MusicGenreService musicGenreService)
         {
             _artistBandService = ArtistBandService;
+            _musicGenreService = musicGenreService;
         }
 
         public IActionResult Index()
@@ -24,7 +27,9 @@ namespace CatalogoDeDiscos.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var musicGenres = _musicGenreService.FindAll();
+            var viewModel = new ArtistBandFormViewModel { MusicGenres = musicGenres };
+            return View(viewModel);
         }
 
         [HttpPost]
