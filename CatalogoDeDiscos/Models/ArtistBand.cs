@@ -9,6 +9,7 @@ namespace CatalogoDeDiscos.Models
         public int FoundingDate { get; set; }
         public string Country { get; set; }
         public MusicGenre MusicGenre { get; set; }
+        public int MusicGenreId { get; set; }
         public ICollection<Album> Albuns { get; set; } = new List<Album>();
 
         public ArtistBand()
