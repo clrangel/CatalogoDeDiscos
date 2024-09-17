@@ -15,6 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<SeedingService>();
 builder.Services.AddScoped<ArtistBandService>();
 builder.Services.AddScoped<AlbumService>();
+builder.Services.AddScoped<MusicGenreService>();
 
 
 var app = builder.Build();
