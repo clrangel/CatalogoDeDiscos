@@ -1,0 +1,44 @@
+﻿@model CatalogoDeDiscos.Models.ArtistBand
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>ArtistBand</h4>
+    <hr />
+    <dl class="d-lg-table">
+        <dt>
+            @Html.DisplayNameFor(Model => Model.ArtistName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.ArtistName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(Model => Model.FoundingDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.FoundingDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(Model => Model.Country)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.Country)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(Model => Model.MusicGenre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.MusicGenre.Genre)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>
+</div>
+<a asp-action="Index">Back to List</a>
+

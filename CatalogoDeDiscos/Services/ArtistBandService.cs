@@ -1,5 +1,6 @@
 ﻿using CatalogoDeDiscos.Data;
 using CatalogoDeDiscos.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatalogoDeDiscos.Services
 {
@@ -26,7 +27,7 @@ namespace CatalogoDeDiscos.Services
 
         public ArtistBand FindById(int id)
         {
-            return _context.ArtistBand.FirstOrDefault(obj => obj.Id == id);
+            return _context.ArtistBand.Include(obj => obj.MusicGenre).FirstOrDefault(obj => obj.Id == id);
         }
         public void Remove(int id)
         {
