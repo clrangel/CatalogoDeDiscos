@@ -23,17 +23,5 @@ namespace CatalogoDeDiscos.Services
             _context.Add(obj);
             _context.SaveChanges();
         }
-
-        public ArtistBand FindById(int id)
-        {
-            return _context.ArtistBand.FirstOrDefault(obj => obj.Id == id);
-        }
-
-        public void Remove(int id)
-        {
-            var obj = _context.ArtistBand.Find(id);
-            _context.ArtistBand.Remove(obj);
-            _context.SaveChanges();
-        }
     }
 }
