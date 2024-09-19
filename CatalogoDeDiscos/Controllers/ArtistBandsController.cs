@@ -3,6 +3,7 @@ using CatalogoDeDiscos.Models.ViewModels;
 using CatalogoDeDiscos.Services;
 using CatalogoDeDiscos.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace CatalogoDeDiscos.Controllers
 {
@@ -46,12 +47,14 @@ namespace CatalogoDeDiscos.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
             var obj = _artistBandService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                //return NotFound();
+                RedirectToAction(nameof(Error), new { message = "Id not found!" });
             }
             return View(obj);
         }
@@ -68,12 +71,14 @@ namespace CatalogoDeDiscos.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                //return NotFound();
+                RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
             var obj = _artistBandService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found!" });
             }
             return View(obj);
         }
@@ -82,13 +87,15 @@ namespace CatalogoDeDiscos.Controllers
         { 
             if(id == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
             var obj = _artistBandService.FindById(id.Value);
             if(obj == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found!" });
             }
 
             List<MusicGenre> musicGenres = _musicGenreService.FindAll();
@@ -102,23 +109,39 @@ namespace CatalogoDeDiscos.Controllers
         {
             if(id != artistBand.Id)
             {
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = "Id mismatch!" });
             }
             try
             {
                 _artistBandService.Update(artistBand);
                 return RedirectToAction(nameof(Index));
             }
-            catch (NotFoundException e)
+            catch (ApplicationException e) //Dois tratamentos idênticos para as exceções, utiliza-se upcasting para ambas. 
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            catch(DbConcurrencyException e)
+            /*catch (NotFoundException e)
             {
-                return BadRequest();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            
+            catch (DbConcurrencyException e)
+            {
+                //return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }*/
+        }
 
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
 
     }
