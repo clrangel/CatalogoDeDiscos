@@ -5,9 +5,17 @@ namespace CatalogoDeDiscos.Models
     public class ArtistBand
     {
         public int Id { get; set; }
+
+        [Display(Name = "Artist Name")]
+        [Required(ErrorMessage = "{0} required")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} an {1}")]
         public string ArtistName { get; set; }
+
+        [Display(Name = "Founding Date")]
         public int FoundingDate { get; set; }
         public string Country { get; set; }
+
+        [Display(Name = "Music Genre")]
         public MusicGenre MusicGenre { get; set; }
         public int MusicGenreId { get; set; }
         public ICollection<Album> Albuns { get; set; } = new List<Album>();

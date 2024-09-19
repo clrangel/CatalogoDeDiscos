@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using CatalogoDeDiscos.Data;
 using CatalogoDeDiscos.Services;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CatalogoDeDiscosContext>(options =>
 options.UseMySql(builder.Configuration.GetConnectionString("CatalogoDeDiscosContext"),
@@ -21,6 +23,19 @@ builder.Services.AddScoped<MusicGenreService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+//Configuração de locail padrão EUA
+var enUs = new CultureInfo("en-US");
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-US"),
+    SupportedCultures = new List<CultureInfo> { enUs },
+    SupportedUICultures = new List<CultureInfo> { enUs }
+};
+
+app.UseRequestLocalization(localizationOptions);
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
