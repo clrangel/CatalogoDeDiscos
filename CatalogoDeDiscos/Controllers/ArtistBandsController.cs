@@ -1,6 +1,7 @@
 ﻿using CatalogoDeDiscos.Models;
 using CatalogoDeDiscos.Models.ViewModels;
 using CatalogoDeDiscos.Services;
+using CatalogoDeDiscos.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogoDeDiscos.Controllers
@@ -75,6 +76,49 @@ namespace CatalogoDeDiscos.Controllers
                 return NotFound();
             }
             return View(obj);
+        }
+
+        public IActionResult Edit(int? id) 
+        { 
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _artistBandService.FindById(id.Value);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            List<MusicGenre> musicGenres = _musicGenreService.FindAll();
+            ArtistBandFormViewModel viewModel = new ArtistBandFormViewModel { ArtistBand = obj, MusicGenres = musicGenres };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, ArtistBand artistBand)
+        {
+            if(id != artistBand.Id)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _artistBandService.Update(artistBand);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound();
+            }
+            catch(DbConcurrencyException e)
+            {
+                return BadRequest();
+            }
+            
+
         }
 
     }
