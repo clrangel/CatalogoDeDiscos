@@ -1,5 +1,6 @@
 ﻿using CatalogoDeDiscos.Data;
 using CatalogoDeDiscos.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatalogoDeDiscos.Services
 {
@@ -13,9 +14,9 @@ namespace CatalogoDeDiscos.Services
         }
 
         //Retorna uma lista com todos os gêneros do banco de dados.
-        public List<MusicGenre> FindAll()
+        public async Task<List<MusicGenre>> FindAllAsync()
         {
-            return _context.MusicGenre.OrderBy(x => x.Genre).ToList();
+            return await _context.MusicGenre.OrderBy(x => x.Genre).ToListAsync();
         }
 
         public void Insert(MusicGenre obj)

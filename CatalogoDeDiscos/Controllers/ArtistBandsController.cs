@@ -19,38 +19,38 @@ namespace CatalogoDeDiscos.Controllers
             _musicGenreService = musicGenreService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _artistBandService.FindAll();
+            var list = await _artistBandService.FindAllAsync();
             
             return View(list);
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var musicGenres = _musicGenreService.FindAll();
+            var musicGenres = await _musicGenreService.FindAllAsync();
             var viewModel = new ArtistBandFormViewModel { MusicGenres = musicGenres };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ArtistBand artistBand) 
+        public async Task<IActionResult> Create(ArtistBand artistBand) 
         {
-            _artistBandService.Insert(artistBand);
+            await _artistBandService.InsertAsync(artistBand);
 
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 //return NotFound();
                 return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
-            var obj = _artistBandService.FindById(id.Value);
+            var obj = await _artistBandService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 //return NotFound();
@@ -61,20 +61,20 @@ namespace CatalogoDeDiscos.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _artistBandService.Remove(id);
+            await _artistBandService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 //return NotFound();
                 RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
-            var obj = _artistBandService.FindById(id.Value);
+            var obj = await _artistBandService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 //return NotFound();
@@ -83,7 +83,7 @@ namespace CatalogoDeDiscos.Controllers
             return View(obj);
         }
 
-        public IActionResult Edit(int? id) 
+        public async Task<IActionResult> Edit(int? id) 
         { 
             if(id == null)
             {
@@ -91,21 +91,21 @@ namespace CatalogoDeDiscos.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
-            var obj = _artistBandService.FindById(id.Value);
+            var obj = await _artistBandService.FindByIdAsync(id.Value);
             if(obj == null)
             {
                 //return NotFound();
                 return RedirectToAction(nameof(Error), new { message = "Id not found!" });
             }
 
-            List<MusicGenre> musicGenres = _musicGenreService.FindAll();
+            List<MusicGenre> musicGenres = await _musicGenreService.FindAllAsync();
             ArtistBandFormViewModel viewModel = new ArtistBandFormViewModel { ArtistBand = obj, MusicGenres = musicGenres };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, ArtistBand artistBand)
+        public async Task<IActionResult> Edit(int id, ArtistBand artistBand)
         {
             if(id != artistBand.Id)
             {
@@ -114,7 +114,7 @@ namespace CatalogoDeDiscos.Controllers
             }
             try
             {
-                _artistBandService.Update(artistBand);
+                await _artistBandService.UpdateAsync(artistBand);
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e) //Dois tratamentos idênticos para as exceções, utiliza-se upcasting para ambas. 

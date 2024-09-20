@@ -15,38 +15,39 @@ namespace CatalogoDeDiscos.Services
         }
 
         //Retorna uma lista com todas as bandas do banco de dados.
-        public List<ArtistBand> FindAll()
+        public async Task<List<ArtistBand>> FindAllAsync()
         {
-            return _context.ArtistBand.ToList();
+            return await _context.ArtistBand.ToListAsync();
         }
 
-        public void Insert(ArtistBand obj)
+        public async Task InsertAsync(ArtistBand obj)
         {
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public ArtistBand FindById(int id)
+        public async Task<ArtistBand> FindByIdAsync(int id)
         {
-            return _context.ArtistBand.Include(obj => obj.MusicGenre).FirstOrDefault(obj => obj.Id == id);
+            return await _context.ArtistBand.Include(obj => obj.MusicGenre).FirstOrDefaultAsync(obj => obj.Id == id);
         }
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var obj = _context.ArtistBand.Find(id);
+            var obj = await _context.ArtistBand.FindAsync(id);
             _context.ArtistBand.Remove(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(ArtistBand obj)
+        public async Task UpdateAsync(ArtistBand obj)
         {
-            if (!_context.ArtistBand.Any(x => x.Id == obj.Id))
+            bool hasAny = await _context.ArtistBand.AnyAsync(x => x.Id == obj.Id);
+            if (!hasAny)
             {
                 throw new NotFoundException("Id not found");
             }
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e) 
             { 
