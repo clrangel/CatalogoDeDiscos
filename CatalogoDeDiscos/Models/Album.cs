@@ -12,13 +12,13 @@ namespace CatalogoDeDiscos.Models
         [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} an {1}")]
         public string AlbumName { get; set; }
 
-        [Required(ErrorMessage = "{0} required")]
         [Display(Name = "Release Year")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ReleaseYear { get; set; }
         public AlbumStatus Status { get; set; }
 
+        [Required(ErrorMessage = "{0} required")]
         [Display(Name = "Artist Band")]
         public ArtistBand ArtistBand { get; set; }
 

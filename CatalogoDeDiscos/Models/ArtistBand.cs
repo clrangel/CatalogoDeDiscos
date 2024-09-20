@@ -8,7 +8,7 @@ namespace CatalogoDeDiscos.Models
 
         [Display(Name = "Artist Name")]
         [Required(ErrorMessage = "{0} required")]
-        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} an {1}")]
+        [StringLength(60, MinimumLength = 2, ErrorMessage = "{0} size should be between {2} an {1}")]
         public string ArtistName { get; set; }
 
         [Display(Name = "Founding Date")]
