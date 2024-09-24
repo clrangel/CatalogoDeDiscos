@@ -1,9 +1,10 @@
-﻿@model IEnumerable<CatalogoDeDiscos.Models.Album> 
+﻿@model IEnumerable<CatalogoDeDiscos.Models.Album>
+
 @{
     ViewData["Title"] = "Albums";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2>@ViewData["Title"]</h2>
 
 <p>
     <a asp-action="Create" class="btn btn-dark">Create New Album</a>
@@ -13,13 +14,16 @@
     <thead>
         <tr class="bg-success">
             <th>
-                @Html.DisplayNameFor(model => model.ArtistBand)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.AlbumName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ArtistBand)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ReleaseYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             
             <th></th>
@@ -30,15 +34,17 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ArtistBand.ArtistName)
+                    @Html.DisplayFor(modelItem => item.AlbumName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AlbumName)
+                    @Html.DisplayFor(modelItem => item.ArtistBand.ArtistName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ReleaseYear)
                 </td>
-                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a>
@@ -51,4 +57,3 @@
 
 
 </table>
-
