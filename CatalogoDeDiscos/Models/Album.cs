@@ -21,6 +21,7 @@ namespace CatalogoDeDiscos.Models
         [Required(ErrorMessage = "{0} required")]
         [Display(Name = "Artist Band")]
         public ArtistBand ArtistBand { get; set; }
+        public int ArtistBandId { get; set; }
 
         public Album()
         {
