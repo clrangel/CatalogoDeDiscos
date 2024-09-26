@@ -1,0 +1,50 @@
+﻿@model CatalogoDeDiscos.Models.Album
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Are your sure you want to delete this?</h3>
+
+<div>
+    <h4>Album List</h4>
+    <hr />
+    <dl class="d-lg-table">
+        <dt>
+            @Html.DisplayNameFor(Model => Model.AlbumName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.AlbumName)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(Model => Model.ReleaseYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.ReleaseYear)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(Model => Model.ArtistBand)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.ArtistBand)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(Model => Model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.Status)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+    <p />
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+

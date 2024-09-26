@@ -24,5 +24,17 @@ namespace CatalogoDeDiscos.Services
             _context.Add(obj);
             _context.SaveChanges();
         }
+
+        public Album FindById(int id)
+        {
+            return _context.Album.FirstOrDefault(obj => obj.Id == id);
+        }
+
+        public void Remove(int id)
+        {
+            var obj = _context.Album.Find(id);
+            _context.Album.Remove(obj);
+            _context.SaveChanges();
+        }
     }
 }
