@@ -1,5 +1,6 @@
 ﻿using CatalogoDeDiscos.Data;
 using CatalogoDeDiscos.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatalogoDeDiscos.Services
 {
@@ -16,7 +17,7 @@ namespace CatalogoDeDiscos.Services
         public List<Album> FindAll()
         {
             //return _context.Album.ToList();
-            return _context.Album.OrderBy(x => x.ArtistBand).ToList();
+            return _context.Album.Include(obj => obj.ArtistBand).OrderBy(x => x.ArtistBand).ToList();
         }
 
         public void Insert(Album obj)
@@ -27,7 +28,7 @@ namespace CatalogoDeDiscos.Services
 
         public Album FindById(int id)
         {
-            return _context.Album.FirstOrDefault(obj => obj.Id == id);
+            return _context.Album.Include(obj => obj.ArtistBand).FirstOrDefault(obj => obj.Id == id);
         }
 
         public void Remove(int id)

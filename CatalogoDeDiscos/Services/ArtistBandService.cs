@@ -17,7 +17,7 @@ namespace CatalogoDeDiscos.Services
         //Retorna uma lista com todas as bandas do banco de dados.
         public async Task<List<ArtistBand>> FindAllAsync()
         {
-            return await _context.ArtistBand.ToListAsync();
+            return await _context.ArtistBand.Include(obj => obj.MusicGenre).ToListAsync();
         }
 
         public async Task InsertAsync(ArtistBand obj)
