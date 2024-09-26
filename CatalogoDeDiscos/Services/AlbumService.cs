@@ -1,5 +1,6 @@
 ﻿using CatalogoDeDiscos.Data;
 using CatalogoDeDiscos.Models;
+using CatalogoDeDiscos.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogoDeDiscos.Services
@@ -36,6 +37,23 @@ namespace CatalogoDeDiscos.Services
             var obj = _context.Album.Find(id);
             _context.Album.Remove(obj);
             _context.SaveChanges();
+        }
+
+        public void Update(Album obj)
+        {
+            if(!_context.Album.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id not found");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new DbUpdateConcurrencyException(e.Message);
+            }
         }
     }
 }

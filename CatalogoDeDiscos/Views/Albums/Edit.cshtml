@@ -1,0 +1,45 @@
+﻿@model CatalogoDeDiscos.Models.ViewModels.AlbumFormViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Album</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Album.Id" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Album.AlbumName" class="control-label"></label>
+                <input asp-for="Album.AlbumName" class="form-control" />
+                <span asp-validation-for="Album.AlbumName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Album.ReleaseYear" class="control-label"></label>
+                <input asp-for="Album.ReleaseYear" class="form-control" />
+                <span asp-validation-for="Album.ReleaseYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Album.ArtistBandId" class="control-label"></label>
+                <select asp-for="Album.ArtistBandId" asp-items="@(new SelectList(Model.ArtistBands,"Id", "ArtistName"))" class="form-control"></select>
+            </div>
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-dark" />
+            </div>
+            <p />
+            <div class="form-group">
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
