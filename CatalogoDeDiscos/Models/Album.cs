@@ -9,7 +9,7 @@ namespace CatalogoDeDiscos.Models
 
         [Display(Name = "Album Name")]
         [Required(ErrorMessage = "{0} required")]
-        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} an {1}")]
+        [StringLength(60, MinimumLength = 2, ErrorMessage = "{0} size should be between {2} an {1}")]
         public string AlbumName { get; set; }
 
         [Display(Name = "Release Year")]
