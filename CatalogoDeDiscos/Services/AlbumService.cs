@@ -15,40 +15,41 @@ namespace CatalogoDeDiscos.Services
         }
 
         //Retorna uma lista com todos os discos do banco de dados.
-        public List<Album> FindAll()
+        public async Task<List<Album>> FindAllAsync()
         {
             //return _context.Album.ToList();
-            return _context.Album.Include(obj => obj.ArtistBand).OrderBy(x => x.ArtistBand).ToList();
+            return await _context.Album.Include(obj => obj.ArtistBand).OrderBy(x => x.ArtistBand).ToListAsync();
         }
 
-        public void Insert(Album obj)
+        public async Task InsertAsync(Album obj)
         {
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public Album FindById(int id)
+        public async Task<Album> FindByIdAsync(int id)
         {
-            return _context.Album.Include(obj => obj.ArtistBand).FirstOrDefault(obj => obj.Id == id);
+            return await _context.Album.Include(obj => obj.ArtistBand).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var obj = _context.Album.Find(id);
+            var obj = await _context.Album.FindAsync(id);
             _context.Album.Remove(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Album obj)
+        public async Task UpdateAsync(Album obj)
         {
-            if(!_context.Album.Any(x => x.Id == obj.Id))
+            bool hasAny = await _context.Album.AnyAsync(x => x.Id == obj.Id);
+            if (!hasAny)
             {
                 throw new NotFoundException("Id not found");
             }
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {

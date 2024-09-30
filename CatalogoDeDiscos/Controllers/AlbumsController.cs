@@ -17,9 +17,9 @@ namespace CatalogoDeDiscos.Controllers
             _albumService = albumService;
             _artistBandService = artistBandService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _albumService.FindAll();
+            var list = await _albumService.FindAllAsync();
 
             return View(list);
         }
@@ -33,13 +33,13 @@ namespace CatalogoDeDiscos.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Album album) 
+        public async Task<IActionResult> Create(Album album) 
         { 
-            _albumService.Insert(album);
+            await _albumService.InsertAsync(album);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -47,7 +47,7 @@ namespace CatalogoDeDiscos.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
-            var obj = _albumService.FindById(id.Value);
+            var obj = await _albumService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 //return NotFound();
@@ -59,13 +59,13 @@ namespace CatalogoDeDiscos.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _albumService.Remove(id);
+            await _albumService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -73,7 +73,7 @@ namespace CatalogoDeDiscos.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
-            var obj = _albumService.FindById(id.Value);
+            var obj = await _albumService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 //return NotFound();
@@ -91,7 +91,7 @@ namespace CatalogoDeDiscos.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
-            var obj = _albumService.FindById(id.Value);
+            var obj = await _albumService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 //return NotFound();
@@ -105,7 +105,7 @@ namespace CatalogoDeDiscos.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Album album)
+        public async Task<IActionResult> Edit(int id, Album album)
         {
             if(id != album.Id)
             {
@@ -114,7 +114,7 @@ namespace CatalogoDeDiscos.Controllers
             }
             try
             {
-                _albumService.Update(album);
+                await _albumService.UpdateAsync(album);
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e) //Dois tratamentos idênticos para as exceções, utiliza-se upcasting para ambas. 
