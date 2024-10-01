@@ -150,5 +150,23 @@ namespace CatalogoDeDiscos.Controllers
             };
             return View(viewModel);
         }
+
+        
+        public async Task<IActionResult> SearchAlbumsYear(DateTime? minDate, DateTime? maxDate)
+        {
+            if (!minDate.HasValue)
+            {
+                minDate = new DateTime(DateTime.Now.Year, 1, 1);
+            }
+            if (!maxDate.HasValue)
+            {
+                maxDate = DateTime.Now;
+            }
+            ViewData["minDate"] = minDate.Value.ToString("dd-MM-yyyy");
+            ViewData["maxDate"] = maxDate.Value.ToString("dd-MM-yyyy");
+            var result = await _albumService.FindByDateAsync(minDate, maxDate);
+            return View(result);
+        }
+        
     }
 }

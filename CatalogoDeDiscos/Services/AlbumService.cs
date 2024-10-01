@@ -63,5 +63,23 @@ namespace CatalogoDeDiscos.Services
                 throw new DbUpdateConcurrencyException(e.Message);
             }
         }
+
+        public async Task<List<Album>> FindByDateAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            var result = from obj in _context.Album select obj;
+            if(minDate.HasValue)
+            {
+                result = result.Where(x => x.ReleaseYear >= minDate.Value);
+            }
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.ReleaseYear <= maxDate.Value);
+            }
+            return await result
+                .Include(x => x.ArtistBand)
+                .Include(x => x.ArtistBand.MusicGenre)
+                .OrderByDescending(x => x.ReleaseYear)
+                .ToListAsync();
+        }
     }
 }

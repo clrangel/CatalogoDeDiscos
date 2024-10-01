@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CatalogoDeDiscos.Models.Album>
+@{
+    ViewData["Title"] = "Albums Year";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="minDate">Min Date</label>
+                    <input type="ReleaseYear" class="form-control" name="minDate" value=@ViewData["minDate"] />
+                </div>
+                <div class="form-group">
+                    <label for="maxDate">Max Date</label>
+                    <input type="ReleaseYear" class="form-control" name="maxDate" value=@ViewData["maxDate"] />
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+</nav>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Total albums = @Model.Sum(obj => obj.AlbumName.Count())</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="success">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ArtistBand)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AlbumName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReleaseYear)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ArtistBand.MusicGenre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ArtistBand.ArtistName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AlbumName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReleaseYear)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ArtistBand.MusicGenre.Genre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
